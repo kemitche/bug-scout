@@ -1,5 +1,7 @@
 # bug-scout
-Easily learn which Animal Crossing: New Horizons bugs are catchable and valuable
+Easily learn which Animal Crossing: New Horizons bugs are catchable and valuable.
+
+[See the site in action](https://kemitche.github.io/bug-scout)
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -29,3 +31,7 @@ The build is minified and the filenames include the hashes.<br />
 Your app is ready to be deployed!
 
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+
+### `npm deploy`
+
+Builds and deploys a productionized page to a `gh-pages` branch of this repo.

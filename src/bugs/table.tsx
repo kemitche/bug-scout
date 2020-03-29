@@ -19,7 +19,7 @@ class BugTable extends React.Component<BugTableProps, {}> {
     }
 
     render() {
-        const bugList = this.props.bugs.map((bug: Bug) => this.renderBug(bug))
+        const bugList = this.props.bugs.map(this.renderBug)
 
         return (
             <Table>

@@ -50,8 +50,25 @@ class App extends React.Component<{}, AppState> {
         return sortedBugs;
     }
 
-    setUseRealTime(useRealTime: boolean): void {
-        console.log(useRealTime);
+    setUseRealTime = (useRealTime: boolean): void => {
+        this.setState({
+            useRealTime: useRealTime,
+        });
+    }
+
+    setMonthToUse = (month: number): void => {
+        this.setState((prevState, props) => ({
+            timeToUse: new Date(prevState.timeToUse.setMonth(month))
+        }))
+    }
+
+    setTimeToUse = (time: Date): void => {
+        this.setState((prevState, props) => {
+            let nextDate = prevState.timeToUse;
+            nextDate.setHours(time.getHours());
+            nextDate.setMinutes(time.getMinutes())
+            return {timeToUse: new Date(nextDate.setSeconds(0))}
+        })
     }
 
     render() {
@@ -70,7 +87,17 @@ class App extends React.Component<{}, AppState> {
                 <Container>
                     <Row>
                         <Col><Clock when={time} /></Col>
-                        {/* <Col><TimeModal setUseRealTime={this.setUseRealTime} useRealTime={this.state.useRealTime} buttonLabel="Change time"/></Col> */}
+                        <Col>
+                            <TimeModal
+                                useRealTime={this.state.useRealTime}
+                                setUseRealTime={this.setUseRealTime}
+                                month={time.getMonth()}
+                                setMonth={this.setMonthToUse}
+                                time={time}
+                                setTime={this.setTimeToUse}
+                                buttonLabel="Change time"
+                            />
+                        </Col>
                     </Row>
                 </Container>
                 <BugTable bugs={bugs}/>

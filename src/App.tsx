@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 
+import TimeModal from './bugs/time_chooser';
 import BugTable from './bugs/table';
 import Bug, { NorthernBugs, PriceCompare } from './data/bugs';
 
@@ -26,6 +27,7 @@ class App extends React.Component {
         const bugs = this.sortAndFilter(NorthernBugs);
         return (
             <div className="App">
+                <TimeModal buttonLabel="Change time"/>
                 <BugTable bugs={bugs}/>
                 <small>
                     Data sourced from the <a href="https://animalcrossing.fandom.com/wiki/Bugs_(New_Horizons)">Animal Crossing Fandom</a> under

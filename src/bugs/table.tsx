@@ -1,4 +1,5 @@
 import React from 'react';
+import { Table } from 'reactstrap';
 
 import Bug from '../data/bugs';
 
@@ -8,22 +9,24 @@ type BugTableProps = {
 
 class BugTable extends React.Component<BugTableProps, {}> {
     renderBug(bug: Bug) {
-        return <tr key={bug.name}>
-            <td>{bug.name}</td>
-            <td>{bug.price}</td>
-            <td>{bug.location}</td>
-        </tr>
+        return (
+            <tr key={bug.name}>
+                <td>{bug.name}</td>
+                <td>{bug.price}</td>
+                <td>{bug.location}</td>
+            </tr>
+        );
     }
 
     render() {
         const bugList = this.props.bugs.map((bug: Bug) => this.renderBug(bug))
 
         return (
-            <table>
+            <Table>
                 <tbody>
                     {bugList}
                 </tbody>
-            </table>
+            </Table>
         );
     }
 }

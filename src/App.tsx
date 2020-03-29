@@ -10,6 +10,12 @@ class App extends React.Component {
         let currentMonth = now.getMonth() + 1;
         let currentHour = now.getHours();
         let sortedBugs = bugs.filter(function(item) {
+            if(!item.price) {
+                console.log("Filtering " + item.name + " because no price");
+            }
+            if (!item.isActive(currentMonth, currentHour)) {
+                console.log("Filtering " + item.name + " because not active at " + currentMonth + " / " + currentHour);
+            }
             return (item.price && item.isActive(currentMonth, currentHour));
         })
         sortedBugs.sort(PriceCompare)

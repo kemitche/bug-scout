@@ -8,7 +8,7 @@ type ClockProps = {
 
 class Clock extends React.Component<ClockProps, {}> {
     render() {
-        const options = {month: 'long', hour12: true, hour: 'numeric'}
+        const options = {month: 'long', hour12: true, hour: 'numeric', minute: 'numeric', second: 'numeric'}
         const timeString = this.props.when.toLocaleString('default', options);
 
         return (

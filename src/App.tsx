@@ -28,7 +28,7 @@ class App extends React.Component {
                 <Container>
                     <Row>
                         <Col><Clock when={now} /></Col>
-                        <Col><TimeModal buttonLabel="Change time"/></Col>
+                        {/* <Col><TimeModal buttonLabel="Change time"/></Col> */}
                     </Row>
                 </Container>
                 <BugTable bugs={bugs}/>

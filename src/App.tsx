@@ -1,33 +1,36 @@
 import React from 'react';
 import './App.css';
 
+import { Container, Row, Col } from 'reactstrap';
+
+import Clock from './bugs/clock';
 import TimeModal from './bugs/time_chooser';
 import BugTable from './bugs/table';
 import Bug, { NorthernBugs, PriceCompare } from './data/bugs';
 
 class App extends React.Component {
-    sortAndFilter(bugs: Bug[]) {
-        let now = new Date();
-        let currentMonth = now.getMonth() + 1;
-        let currentHour = now.getHours();
+    sortAndFilter(bugs: Bug[], month: number, hour: number) {
         let sortedBugs = bugs.filter(function(item) {
-            if(!item.price) {
-                console.log("Filtering " + item.name + " because no price");
-            }
-            if (!item.isActive(currentMonth, currentHour)) {
-                console.log("Filtering " + item.name + " because not active at " + currentMonth + " / " + currentHour);
-            }
-            return (item.price && item.isActive(currentMonth, currentHour));
+            return (item.price && item.isActive(month, hour));
         })
         sortedBugs.sort(PriceCompare)
         return sortedBugs;
     }
 
     render() {
-        const bugs = this.sortAndFilter(NorthernBugs);
+        let now = new Date();
+        let currentMonth = now.getMonth() + 1;
+        let currentHour = now.getHours();
+
+        const bugs = this.sortAndFilter(NorthernBugs, currentMonth, currentHour);
         return (
             <div className="App">
-                <TimeModal buttonLabel="Change time"/>
+                <Container>
+                    <Row>
+                        <Col><Clock when={now} /></Col>
+                        <Col><TimeModal buttonLabel="Change time"/></Col>
+                    </Row>
+                </Container>
                 <BugTable bugs={bugs}/>
                 <small>
                     Data sourced from the <a href="https://animalcrossing.fandom.com/wiki/Bugs_(New_Horizons)">Animal Crossing Fandom</a> under

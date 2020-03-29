@@ -88,10 +88,9 @@ class TimeChooser extends React.Component<TimeChooserProps, {}> {
         return (
             <div className="time-chooser">
                 <FormGroup>
-                    <Label check>
-                        <Input type="checkbox" checked={this.props.useRealTime} onClick={this.toggleRealTime}/>{' '}
-                        Use current time
-                    </Label>
+                    <Button outline={!this.props.useRealTime} color="success" onClick={this.toggleRealTime}>
+                        {this.props.useRealTime ? "☑" : "☐"} Use current time
+                    </Button>
                 </FormGroup>
                 <FormGroup>
                     <Label for="monthSelect">Month</Label>

@@ -1,8 +1,6 @@
 import React from 'react';
 import './App.css';
 
-import { Container, Row, Col } from 'reactstrap';
-
 import Clock from './bugs/clock';
 import TimeModal from './bugs/time_chooser';
 import BugTable from './bugs/table';
@@ -84,27 +82,29 @@ class App extends React.Component<{}, AppState> {
         const bugs = this.sortAndFilter(NorthernBugs, currentMonth, currentHour);
         return (
             <div className="App">
-                <Container>
-                    <Row>
-                        <Col><Clock when={time} /></Col>
-                        <Col>
-                            <TimeModal
-                                useRealTime={this.state.useRealTime}
-                                setUseRealTime={this.setUseRealTime}
-                                month={time.getMonth()}
-                                setMonth={this.setMonthToUse}
-                                time={time}
-                                setTime={this.setTimeToUse}
-                                buttonLabel="Change time"
-                            />
-                        </Col>
-                    </Row>
-                </Container>
+                <div className="bug-header">
+                    <div className="bug-header-item">
+                        <Clock when={time} />
+                    </div>
+                    <div className="bug-header-item">
+                        <TimeModal
+                            useRealTime={this.state.useRealTime}
+                            setUseRealTime={this.setUseRealTime}
+                            month={time.getMonth()}
+                            setMonth={this.setMonthToUse}
+                            time={time}
+                            setTime={this.setTimeToUse}
+                            buttonLabel="Change time"
+                        />
+                    </div>
+                </div>
                 <BugTable bugs={bugs}/>
-                <small>
-                    Data sourced from the <a href="https://animalcrossing.fandom.com/wiki/Bugs_(New_Horizons)">Animal Crossing Fandom</a> under
-                    the terms of the <a href="https://creativecommons.org/licenses/by-sa/3.0/legalcode">CC-BY-SA</a> license.
-                </small>
+                <div className="license-footer">
+                    <small>
+                        Data sourced from the <a href="https://animalcrossing.fandom.com/wiki/Bugs_(New_Horizons)">Animal Crossing Fandom</a> under
+                        the terms of the <a href="https://creativecommons.org/licenses/by-sa/3.0/legalcode">CC-BY-SA</a> license.
+                    </small>
+                </div>
             </div>
         );
     }

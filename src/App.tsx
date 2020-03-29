@@ -8,7 +8,40 @@ import TimeModal from './bugs/time_chooser';
 import BugTable from './bugs/table';
 import Bug, { NorthernBugs, PriceCompare } from './data/bugs';
 
-class App extends React.Component {
+type AppState = {
+    now: Date,
+    useRealTime: boolean,
+    timeToUse: Date,
+}
+
+class App extends React.Component<{}, AppState> {
+    timerID: number | null;
+    constructor(props: {}) {
+        super(props);
+        this.state = {now: new Date(), useRealTime: true, timeToUse: new Date()};
+        this.timerID = null;
+    }
+
+    componentDidMount() {
+        this.timerID = window.setInterval(
+            () => this.tick(),
+            1000
+        );
+    }
+
+    componentWillUnmount() {
+        if (this.timerID) {
+            clearInterval(this.timerID);
+            this.timerID = null;
+        }
+    }
+
+    tick() {
+        this.setState({
+            now: new Date()
+        });
+    }
+
     sortAndFilter(bugs: Bug[], month: number, hour: number) {
         let sortedBugs = bugs.filter(function(item) {
             return (item.price && item.isActive(month, hour));
@@ -17,18 +50,27 @@ class App extends React.Component {
         return sortedBugs;
     }
 
+    setUseRealTime(useRealTime: boolean): void {
+        console.log(useRealTime);
+    }
+
     render() {
-        let now = new Date();
-        let currentMonth = now.getMonth() + 1;
-        let currentHour = now.getHours();
+        let time: Date;
+        if (this.state.useRealTime) {
+            time = this.state.now;
+        } else {
+            time = this.state.timeToUse;
+        }
+        let currentMonth = time.getMonth() + 1;
+        let currentHour = time.getHours();
 
         const bugs = this.sortAndFilter(NorthernBugs, currentMonth, currentHour);
         return (
             <div className="App">
                 <Container>
                     <Row>
-                        <Col><Clock when={now} /></Col>
-                        <Col><TimeModal buttonLabel="Change time"/></Col>
+                        <Col><Clock when={time} /></Col>
+                        {/* <Col><TimeModal setUseRealTime={this.setUseRealTime} useRealTime={this.state.useRealTime} buttonLabel="Change time"/></Col> */}
                     </Row>
                 </Container>
                 <BugTable bugs={bugs}/>

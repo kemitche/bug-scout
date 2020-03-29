@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+import { Button, Input, Label, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
+
+import './time_chooser.css';
 
 type TimeModalProps = {
     buttonLabel: string,
+    useRealTime: boolean,
+    setUseRealTime(useRealTime: boolean): void,
 }
 
 const TimeModal = (props: TimeModalProps) => {
     const {
-        buttonLabel
+        buttonLabel,
+        useRealTime,
+        setUseRealTime,
     } = props
 
     const [modal, setModal] = useState(false);
@@ -19,23 +25,34 @@ const TimeModal = (props: TimeModalProps) => {
             <Button color="success" onClick={toggle}>{buttonLabel}</Button>
             <Modal isOpen={modal} toggle={toggle}>
                 <ModalHeader toggle={toggle}>Configure Time</ModalHeader>
-                <ModalBody>
-                    <TimeChooser/>
+                <ModalBody className="time-modal">
+                    <TimeChooser setUseRealTime={setUseRealTime} useRealTime={useRealTime} />
                 </ModalBody>
                 <ModalFooter>
-                    <Button color="primary" onClick={toggle}>Save</Button>{' '}
-                    <Button color="secondary" onClick={toggle}>Cancel</Button>
+                    <Button color="primary" onClick={toggle}>Done</Button>
                 </ModalFooter>
             </Modal>
         </div>
     );
 }
 
-class TimeChooser extends React.Component {
+interface TimeChooserProps {
+    useRealTime: boolean,
+    setUseRealTime(useRealTime: boolean): void,
+}
+
+class TimeChooser extends React.Component<TimeChooserProps, {}> {
+    toggleRealTime = () => {
+        this.props.setUseRealTime(!this.props.useRealTime);
+    }
+
     render() {
         return (
             <div className="time-chooser">
-                Time chooser here
+                <Label check>
+                    <Input type="checkbox" checked={this.props.useRealTime} onClick={this.toggleRealTime}/>{' '}
+                    Use real time
+                </Label>
             </div>
         );
     }
